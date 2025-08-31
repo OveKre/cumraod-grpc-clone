@@ -1,0 +1,110 @@
+syntax = "proto3";
+
+package products;
+
+option go_package = "github.com/cumraod/grpc-clone/proto/products";
+
+// Products service
+service ProductService {
+  // Get all products with optional pagination and filters
+  rpc GetProducts(GetProductsRequest) returns (GetProductsResponse);
+  
+  // Create new product
+  rpc CreateProduct(CreateProductRequest) returns (CreateProductResponse);
+  
+  // Get product by ID
+  rpc GetProduct(GetProductRequest) returns (GetProductResponse);
+  
+  // Update product
+  rpc UpdateProduct(UpdateProductRequest) returns (UpdateProductResponse);
+  
+  // Delete product
+  rpc DeleteProduct(DeleteProductRequest) returns (DeleteProductResponse);
+}
+
+// Get products request
+message GetProductsRequest {
+  int32 page = 1;
+  int32 limit = 2;
+  string category = 3;
+  double min_price = 4;
+  double max_price = 5;
+}
+
+// Get products response
+message GetProductsResponse {
+  bool success = 1;
+  repeated Product products = 2;
+  int32 total = 3;
+  int32 page = 4;
+  int32 limit = 5;
+  string message = 6;
+}
+
+// Create product request
+message CreateProductRequest {
+  string name = 1;
+  string description = 2;
+  double price = 3;
+  string category = 4;
+  int32 stock_quantity = 5;
+}
+
+// Create product response
+message CreateProductResponse {
+  bool success = 1;
+  Product product = 2;
+  string message = 3;
+}
+
+// Get product request
+message GetProductRequest {
+  int32 id = 1;
+}
+
+// Get product response
+message GetProductResponse {
+  bool success = 1;
+  Product product = 2;
+  string message = 3;
+}
+
+// Update product request
+message UpdateProductRequest {
+  int32 id = 1;
+  string name = 2;
+  string description = 3;
+  double price = 4;
+  string category = 5;
+  int32 stock_quantity = 6;
+}
+
+// Update product response
+message UpdateProductResponse {
+  bool success = 1;
+  Product product = 2;
+  string message = 3;
+}
+
+// Delete product request
+message DeleteProductRequest {
+  int32 id = 1;
+}
+
+// Delete product response
+message DeleteProductResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// Product message
+message Product {
+  int32 id = 1;
+  string name = 2;
+  string description = 3;
+  double price = 4;
+  string category = 5;
+  int32 stock_quantity = 6;
+  string created_at = 7;
+  string updated_at = 8;
+}

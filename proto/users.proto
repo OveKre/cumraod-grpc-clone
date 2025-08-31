@@ -1,0 +1,100 @@
+syntax = "proto3";
+
+package users;
+
+option go_package = "github.com/cumraod/grpc-clone/proto/users";
+
+// Users service
+service UserService {
+  // Get all users with optional pagination
+  rpc GetUsers(GetUsersRequest) returns (GetUsersResponse);
+  
+  // Create new user (registration)
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
+  
+  // Get user by ID
+  rpc GetUser(GetUserRequest) returns (GetUserResponse);
+  
+  // Update user data
+  rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse);
+  
+  // Delete user
+  rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse);
+}
+
+// Get users request
+message GetUsersRequest {
+  int32 page = 1;
+  int32 limit = 2;
+}
+
+// Get users response
+message GetUsersResponse {
+  bool success = 1;
+  repeated User users = 2;
+  int32 total = 3;
+  int32 page = 4;
+  int32 limit = 5;
+  string message = 6;
+}
+
+// Create user request
+message CreateUserRequest {
+  string name = 1;
+  string email = 2;
+  string password = 3;
+}
+
+// Create user response
+message CreateUserResponse {
+  bool success = 1;
+  User user = 2;
+  string message = 3;
+}
+
+// Get user request
+message GetUserRequest {
+  int32 id = 1;
+}
+
+// Get user response
+message GetUserResponse {
+  bool success = 1;
+  User user = 2;
+  string message = 3;
+}
+
+// Update user request
+message UpdateUserRequest {
+  int32 id = 1;
+  string name = 2;
+  string email = 3;
+  string password = 4;
+}
+
+// Update user response
+message UpdateUserResponse {
+  bool success = 1;
+  User user = 2;
+  string message = 3;
+}
+
+// Delete user request
+message DeleteUserRequest {
+  int32 id = 1;
+}
+
+// Delete user response
+message DeleteUserResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// User message
+message User {
+  int32 id = 1;
+  string name = 2;
+  string email = 3;
+  string created_at = 4;
+  string updated_at = 5;
+}

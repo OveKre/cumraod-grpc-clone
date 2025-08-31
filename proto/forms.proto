@@ -1,0 +1,84 @@
+syntax = "proto3";
+
+package forms;
+
+option go_package = "github.com/cumraod/grpc-clone/proto/forms";
+
+// Forms service for testing secure authentication
+service FormsService {
+  // Create a new form (requires authentication)
+  rpc CreateForm(CreateFormRequest) returns (CreateFormResponse);
+  
+  // List user's forms (requires authentication)
+  rpc ListForms(ListFormsRequest) returns (ListFormsResponse);
+  
+  // Get specific form (requires authentication)
+  rpc GetForm(GetFormRequest) returns (GetFormResponse);
+  
+  // Delete form (requires authentication)
+  rpc DeleteForm(DeleteFormRequest) returns (DeleteFormResponse);
+}
+
+// Create form request
+message CreateFormRequest {
+  string token = 1;
+  string title = 2;
+  string description = 3;
+}
+
+// Create form response
+message CreateFormResponse {
+  bool success = 1;
+  Form form = 2;
+  string message = 3;
+}
+
+// List forms request
+message ListFormsRequest {
+  string token = 1;
+  int32 page = 2;
+  int32 limit = 3;
+}
+
+// List forms response
+message ListFormsResponse {
+  bool success = 1;
+  repeated Form forms = 2;
+  int32 total = 3;
+  string message = 4;
+}
+
+// Get form request
+message GetFormRequest {
+  string token = 1;
+  int32 id = 2;
+}
+
+// Get form response
+message GetFormResponse {
+  bool success = 1;
+  Form form = 2;
+  string message = 3;
+}
+
+// Delete form request
+message DeleteFormRequest {
+  string token = 1;
+  int32 id = 2;
+}
+
+// Delete form response
+message DeleteFormResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// Form message
+message Form {
+  int32 id = 1;
+  int32 user_id = 2;
+  string title = 3;
+  string description = 4;
+  string created_at = 5;
+  string updated_at = 6;
+}

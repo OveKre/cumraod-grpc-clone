@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package common;
+
+option go_package = "github.com/cumraod/grpc-clone/proto/common";
+
+// Common error messages and status codes
+message Error {
+  int32 code = 1;
+  string message = 2;
+  string details = 3;
+}
+
+// Pagination info
+message PaginationInfo {
+  int32 page = 1;
+  int32 limit = 2;
+  int32 total = 3;
+  int32 total_pages = 4;
+  bool has_next = 5;
+  bool has_prev = 6;
+}
+
+// Generic success response
+message SuccessResponse {
+  bool success = 1;
+  string message = 2;
+}

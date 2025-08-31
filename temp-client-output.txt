@@ -1,0 +1,152 @@
+
+> cumraod-grpc-clone@1.0.0 client
+> node client/example.js
+
+Starting gRPC Client Demo...
+Connecting to server at localhost:50051
+\n=== Testing Auth Service ===
+Creating test user...
+Auth service error: 6 ALREADY_EXISTS: User with this email already exists
+\n=== Testing User Service ===
+Getting all users...
+Users: {
+  users: [
+    {
+      id: 1,
+      name: 'Updated Test User',
+      email: 'test@example.com',
+      created_at: '2025-08-26T13:29:15.263Z',
+      updated_at: '2025-08-26T13:29:15.522Z'
+    }
+  ],
+  success: true,
+  total: 1,
+  page: 1,
+  limit: 10,
+  message: 'Users retrieved successfully'
+}
+\nGetting user 1...
+User: {
+  success: true,
+  user: {
+    id: 1,
+    name: 'Updated Test User',
+    email: 'test@example.com',
+    created_at: '2025-08-26T13:29:15.263Z',
+    updated_at: '2025-08-26T13:29:15.522Z'
+  },
+  message: 'User retrieved successfully'
+}
+\nUpdating user 1...
+Updated user: {
+  success: true,
+  user: {
+    id: 1,
+    name: 'Updated Test User',
+    email: 'test@example.com',
+    created_at: '2025-08-26T13:29:15.263Z',
+    updated_at: '2025-08-26T13:29:15.522Z'
+  },
+  message: 'User updated successfully'
+}
+\n=== Testing Product Service ===
+Creating product...
+Product created: {
+  success: true,
+  product: {
+    id: 4,
+    name: 'Test Product',
+    description: 'A test product for demo',
+    price: 29.99,
+    category: 'Electronics',
+    stock_quantity: 100,
+    created_at: '2025-08-26T13:49:29.666Z',
+    updated_at: '2025-08-26T13:49:29.666Z'
+  },
+  message: 'Product created successfully'
+}
+\nGetting all products...
+Products: {
+  products: [
+    {
+      id: 1,
+      name: 'Updated Test Product',
+      description: '',
+      price: 39.99,
+      category: 'Electronics',
+      stock_quantity: 0,
+      created_at: '2025-08-26T13:29:15.549Z',
+      updated_at: '2025-08-26T13:29:15.630Z'
+    },
+    {
+      id: 2,
+      name: 'Updated Test Product',
+      description: '',
+      price: 39.99,
+      category: 'Electronics',
+      stock_quantity: 0,
+      created_at: '2025-08-26T13:43:37.250Z',
+      updated_at: '2025-08-26T13:43:37.309Z'
+    },
+    {
+      id: 3,
+      name: 'Updated Test Product',
+      description: '',
+      price: 39.99,
+      category: 'Electronics',
+      stock_quantity: 0,
+      created_at: '2025-08-26T13:45:03.904Z',
+      updated_at: '2025-08-26T13:45:03.957Z'
+    },
+    {
+      id: 4,
+      name: 'Test Product',
+      description: 'A test product for demo',
+      price: 29.99,
+      category: 'Electronics',
+      stock_quantity: 100,
+      created_at: '2025-08-26T13:49:29.666Z',
+      updated_at: '2025-08-26T13:49:29.666Z'
+    }
+  ],
+  success: true,
+  total: 4,
+  page: 1,
+  limit: 10,
+  message: 'Products retrieved successfully'
+}
+\nGetting product 4...
+Product: {
+  success: true,
+  product: {
+    id: 4,
+    name: 'Test Product',
+    description: 'A test product for demo',
+    price: 29.99,
+    category: 'Electronics',
+    stock_quantity: 100,
+    created_at: '2025-08-26T13:49:29.666Z',
+    updated_at: '2025-08-26T13:49:29.666Z'
+  },
+  message: 'Product retrieved successfully'
+}
+\nUpdating product 4...
+Updated product: {
+  success: true,
+  product: {
+    id: 4,
+    name: 'Updated Test Product',
+    description: '',
+    price: 39.99,
+    category: 'Electronics',
+    stock_quantity: 0,
+    created_at: '2025-08-26T13:49:29.666Z',
+    updated_at: '2025-08-26T13:49:29.717Z'
+  },
+  message: 'Product updated successfully'
+}
+\n=== Testing Order Service ===
+Creating order...
+Order service error: 9 FAILED_PRECONDITION: Insufficient stock for product Updated Test Product
+\n=== Demo Completed Successfully ===
+All gRPC services are working correctly!

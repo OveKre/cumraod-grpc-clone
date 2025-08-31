@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  grpc-server:
+    build: .
+    ports:
+      - "50051:50051"
+    environment:
+      - GRPC_HOST=0.0.0.0
+      - GRPC_PORT=50051
+      - JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
+      - JWT_EXPIRES_IN=24h
+      - NODE_ENV=production
+    volumes:
+      - ./database.sqlite:/app/database.sqlite
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "const net = require('net'); const client = net.createConnection(50051, '127.0.0.1', () => { console.log('OK'); client.end(); process.exit(0); }); client.on('error', () => process.exit(1)); setTimeout(() => process.exit(1), 3000);"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  grpc-client-demo:
+    build: .
+    depends_on:
+      grpc-server:
+        condition: service_healthy
+    environment:
+      - GRPC_HOST=grpc-server
+      - GRPC_PORT=50051
+    command: ["node", "client/example.js"]
+    profiles:
+      - demo

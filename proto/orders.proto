@@ -1,0 +1,118 @@
+syntax = "proto3";
+
+package orders;
+
+option go_package = "github.com/cumraod/grpc-clone/proto/orders";
+
+// Orders service
+service OrderService {
+  // Get all orders for user with optional pagination
+  rpc GetOrders(GetOrdersRequest) returns (GetOrdersResponse);
+  
+  // Create new order
+  rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse);
+  
+  // Get order by ID
+  rpc GetOrder(GetOrderRequest) returns (GetOrderResponse);
+  
+  // Update order status
+  rpc UpdateOrder(UpdateOrderRequest) returns (UpdateOrderResponse);
+  
+  // Cancel/Delete order
+  rpc DeleteOrder(DeleteOrderRequest) returns (DeleteOrderResponse);
+}
+
+// Get orders request
+message GetOrdersRequest {
+  int32 user_id = 1;
+  int32 page = 2;
+  int32 limit = 3;
+  string status = 4;
+}
+
+// Get orders response
+message GetOrdersResponse {
+  bool success = 1;
+  repeated Order orders = 2;
+  int32 total = 3;
+  int32 page = 4;
+  int32 limit = 5;
+  string message = 6;
+}
+
+// Create order request
+message CreateOrderRequest {
+  int32 user_id = 1;
+  repeated OrderItem items = 2;
+  string shipping_address = 3;
+  string payment_method = 4;
+}
+
+// Create order response
+message CreateOrderResponse {
+  bool success = 1;
+  Order order = 2;
+  string message = 3;
+}
+
+// Get order request
+message GetOrderRequest {
+  int32 id = 1;
+  int32 user_id = 2;
+}
+
+// Get order response
+message GetOrderResponse {
+  bool success = 1;
+  Order order = 2;
+  string message = 3;
+}
+
+// Update order request
+message UpdateOrderRequest {
+  int32 id = 1;
+  int32 user_id = 2;
+  string status = 3;
+  string shipping_address = 4;
+}
+
+// Update order response
+message UpdateOrderResponse {
+  bool success = 1;
+  Order order = 2;
+  string message = 3;
+}
+
+// Delete order request
+message DeleteOrderRequest {
+  int32 id = 1;
+  int32 user_id = 2;
+}
+
+// Delete order response
+message DeleteOrderResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// Order message
+message Order {
+  int32 id = 1;
+  int32 user_id = 2;
+  repeated OrderItem items = 3;
+  double total_amount = 4;
+  string status = 5;
+  string shipping_address = 6;
+  string payment_method = 7;
+  string created_at = 8;
+  string updated_at = 9;
+}
+
+// Order item message
+message OrderItem {
+  int32 product_id = 1;
+  string product_name = 2;
+  int32 quantity = 3;
+  double price = 4;
+  double subtotal = 5;
+}
