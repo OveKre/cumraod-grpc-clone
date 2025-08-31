@@ -6,6 +6,9 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
+# Generated protobuf files (if using protoc directly)
+*.pb.js
+
 # Runtime data
 pids
 *.pid

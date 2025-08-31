@@ -43,11 +43,12 @@ This gRPC server reproduces the following REST API functionality:
 ├── tests/              # Automated tests
 │   ├── test.sh         # Linux/Mac test script
 │   ├── test.bat        # Windows test script
-│   ├── test.ps1        # PowerShell test script
-│   └── logout-security-test.js # Security test for logout
+│   └── test.ps1        # PowerShell test script
 ├── scripts/            # Launch scripts
 │   ├── run.sh          # Linux/Mac launch script
 │   └── run.bat         # Windows launch script
+├── generated/          # Auto-generated protobuf files (gitignored)
+│   └── *.js           # Generated JavaScript files from proto
 ├── docker-compose.yml  # Docker Compose configuration
 ├── Dockerfile          # Docker container
 ├── package.json        # Node.js project configuration
