@@ -1,83 +1,88 @@
 # gRPC REST API Clone
 
-See projekt on gRPC implementatsioon olemasolevast REST API-st, mis pakub täpselt sama funktsionaalsust kasutades gRPC protokolli.
+This project is a gRPC implementation of an existing REST API, providing exactly the same functionality using the gRPC protocol.
 
-## Projekt ülevaade
+## Project Overview
 
-Antud gRPC server reprodutseerib järgmist REST API funktsionaalsust:
-- **Autentimine**: Sisselogimine ja väljalogimine JWT tokenitega
-- **Kasutajate haldus**: CRUD operatsioonid kasutajatega
-- **Toodete haldus**: CRUD operatsioonid toodetega
-- **Tellimuste haldus**: CRUD operatsioonid tellimustega
+This gRPC server reproduces the following REST API functionality:
+- **Authentication**: Login and logout with JWT tokens
+- **User Management**: CRUD operations for users
+- **Product Management**: CRUD operations for products
+- **Order Management**: CRUD operations for orders
 
-## Tehnilised detailid
+## Technical Details
 
-- **Programmeerimiskeel**: Node.js
-- **gRPC raamistik**: @grpc/grpc-js
-- **Andmebaas**: SQLite + Sequelize ORM
-- **Autentimine**: JWT tokenid + bcrypt paroolide hashimiseks
-- **Protokoll**: Protocol Buffers (protobuf)
+- **Programming Language**: Node.js
+- **gRPC Framework**: @grpc/grpc-js
+- **Database**: SQLite + Sequelize ORM
+- **Authentication**: JWT tokens + bcrypt for password hashing
+- **Protocol**: Protocol Buffers (protobuf)
 
-## Kataloogistruktuur
+## Directory Structure
 
 ```
 /
-├── proto/              # Protocol Buffer definitsioonid
-│   ├── auth.proto      # Autentimise teenused
-│   ├── users.proto     # Kasutajate teenused
-│   ├── products.proto  # Toodete teenused
-│   ├── orders.proto    # Tellimuste teenused
-│   └── common.proto    # Üldised sõnumid
-├── src/                # Lähtekood
-│   ├── server.js       # Peamine gRPC server
-│   ├── models.js       # Andmebaasi mudelid
-│   ├── authService.js  # Autentimise teenuse implementatsioon
-│   ├── userService.js  # Kasutajate teenuse implementatsioon
-│   ├── productService.js # Toodete teenuse implementatsioon
-│   └── orderService.js # Tellimuste teenuse implementatsioon
-├── client/             # Kliendi näited
-│   └── example.js      # Demo klient
-├── tests/              # Automaattestid
-│   ├── test.sh         # Linux/Mac testide skript
-│   └── test.bat        # Windows testide skript
-├── scripts/            # Käivitusskriptid
-│   ├── run.sh          # Linux/Mac käivitusskript
-│   └── run.bat         # Windows käivitusskript
-├── docker-compose.yml  # Docker Compose konfiguratsioon
-├── Dockerfile          # Docker konteiner
-├── package.json        # Node.js projekti konfiguratsioon
-└── README.md          # See fail
+├── proto/              # Protocol Buffer definitions
+│   ├── auth.proto      # Authentication services
+│   ├── users.proto     # User services
+│   ├── products.proto  # Product services
+│   ├── orders.proto    # Order services
+│   ├── forms.proto     # Form services (security testing)
+│   └── common.proto    # Common messages
+├── src/                # Source code
+│   ├── server.js       # Main gRPC server
+│   ├── models.js       # Database models
+│   ├── authService.js  # Authentication service implementation
+│   ├── authMiddleware.js # Token validation middleware
+│   ├── userService.js  # User service implementation
+│   ├── productService.js # Product service implementation
+│   ├── orderService.js # Order service implementation
+│   └── formsService.js # Forms service implementation
+├── client/             # Client examples
+│   └── example.js      # Demo client
+├── tests/              # Automated tests
+│   ├── test.sh         # Linux/Mac test script
+│   ├── test.bat        # Windows test script
+│   ├── test.ps1        # PowerShell test script
+│   └── logout-security-test.js # Security test for logout
+├── scripts/            # Launch scripts
+│   ├── run.sh          # Linux/Mac launch script
+│   └── run.bat         # Windows launch script
+├── docker-compose.yml  # Docker Compose configuration
+├── Dockerfile          # Docker container
+├── package.json        # Node.js project configuration
+└── README.md          # This file
 ```
 
-## Eeltingimused
+## Prerequisites
 
-Järgmised tööriistad peavad olema paigaldatud:
+The following tools must be installed:
 
-1. **Node.js** (versioon 16 või uuem)
-   - Allalaadimine: https://nodejs.org/
-   - Kontroll: `node --version`
+1. **Node.js** (version 16 or newer)
+   - Download: https://nodejs.org/
+   - Check: `node --version`
 
-2. **npm** (tuleb Node.js-iga kaasa)
-   - Kontroll: `npm --version`
+2. **npm** (comes with Node.js)
+   - Check: `npm --version`
 
-3. **Git** (projektiga töötamiseks)
-   - Allalaadimine: https://git-scm.com/
-   - Kontroll: `git --version`
+3. **Git** (for working with the project)
+   - Download: https://git-scm.com/
+   - Check: `git --version`
 
-4. **Protocol Buffers Compiler (protoc)** (valikuline, valideerimiseks)
-   - Allalaadimine: https://protobuf.dev/downloads/
-   - Kontroll: `protoc --version`
+4. **Protocol Buffers Compiler (protoc)** (optional, for validation)
+   - Download: https://protobuf.dev/downloads/
+   - Check: `protoc --version`
 
-## Kiire start
+## Quick Start
 
-### 1. Projekti allalaadimine
+### 1. Download Project
 
 ```bash
-git clone https://github.com/yourusername/cumraod-grpc-clone.git
+git clone https://github.com/OveKre/cumraod-grpc-clone.git
 cd cumraod-grpc-clone
 ```
 
-### 2. Käivitamine
+### 2. Launch
 
 #### Linux/Mac:
 ```bash
@@ -90,46 +95,46 @@ chmod +x scripts/run.sh
 scripts\\run.bat
 ```
 
-#### Docker abil:
+#### Using Docker:
 ```bash
 docker-compose up --build
 ```
 
-Server käivitub ja kuulab pordil 50051.
+The server will start and listen on port 50051.
 
-## Kasutamine
+## Usage
 
-### Serveri käivitamine
+### Starting the Server
 
-1. **Otsene käivitamine:**
+1. **Direct launch:**
    ```bash
    npm install
    npm start
    ```
 
-2. **Arendusrežiimis (automaatne taaskäivitamine):**
+2. **Development mode (automatic restart):**
    ```bash
    npm run dev
    ```
 
-3. **Docker abil:**
+3. **Using Docker:**
    ```bash
    docker-compose up
    ```
 
-### Kliendi näite käivitamine
+### Running Client Example
 
 ```bash
 npm run client
 ```
 
-või
+or
 
 ```bash
 node client/example.js
 ```
 
-### Testide käivitamine
+### Running Tests
 
 #### Linux/Mac:
 ```bash
@@ -142,15 +147,20 @@ chmod +x tests/test.sh
 tests\\test.bat
 ```
 
-## gRPC teenused
+#### PowerShell:
+```powershell
+.\tests\test.ps1
+```
+
+## gRPC Services
 
 ### 1. AuthService (auth.proto)
 
-**Endpoint-id:**
+**Endpoints:**
 - `Login(LoginRequest) → LoginResponse`
 - `Logout(LogoutRequest) → LogoutResponse`
 
-**Näide kasutamisest:**
+**Usage example:**
 ```javascript
 const response = await authClient.Login({
   email: 'user@example.com',
@@ -160,7 +170,7 @@ const response = await authClient.Login({
 
 ### 2. UserService (users.proto)
 
-**Endpoint-id:**
+**Endpoints:**
 - `GetUsers(GetUsersRequest) → GetUsersResponse`
 - `CreateUser(CreateUserRequest) → CreateUserResponse`
 - `GetUser(GetUserRequest) → GetUserResponse`
@@ -169,7 +179,7 @@ const response = await authClient.Login({
 
 ### 3. ProductService (products.proto)
 
-**Endpoint-id:**
+**Endpoints:**
 - `GetProducts(GetProductsRequest) → GetProductsResponse`
 - `CreateProduct(CreateProductRequest) → CreateProductResponse`
 - `GetProduct(GetProductRequest) → GetProductResponse`
@@ -178,68 +188,86 @@ const response = await authClient.Login({
 
 ### 4. OrderService (orders.proto)
 
-**Endpoint-id:**
+**Endpoints:**
 - `GetOrders(GetOrdersRequest) → GetOrdersResponse`
 - `CreateOrder(CreateOrderRequest) → CreateOrderResponse`
 - `GetOrder(GetOrderRequest) → GetOrderResponse`
 - `UpdateOrder(UpdateOrderRequest) → UpdateOrderResponse`
 - `DeleteOrder(DeleteOrderRequest) → DeleteOrderResponse`
 
-## Konfiguratsioon
+### 5. FormsService (forms.proto)
 
-### Keskkonnamuutujad (.env fail)
+**Endpoints (for security testing):**
+- `CreateForm(CreateFormRequest) → CreateFormResponse`
+- `ListForms(ListFormsRequest) → ListFormsResponse`
+- `GetForm(GetFormRequest) → GetFormResponse`
+- `DeleteForm(DeleteFormRequest) → DeleteFormResponse`
+
+## Configuration
+
+### Environment Variables (.env file)
 
 ```env
-# gRPC serveri konfiguratsioon
+# gRPC server configuration
 GRPC_HOST=0.0.0.0
 GRPC_PORT=50051
 
-# JWT konfiguratsioon
+# JWT configuration
 JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
 JWT_EXPIRES_IN=24h
 
-# Andmebaasi konfiguratsioon
+# Database configuration
 NODE_ENV=development
 ```
 
-## Veahaldus
+## Error Handling
 
-gRPC server kasutab standardseid gRPC status koode:
+The gRPC server uses standard gRPC status codes:
 
-- `OK (0)` - Edukas vastus
-- `INVALID_ARGUMENT (3)` - Vigased sisendparameetrid
-- `NOT_FOUND (5)` - Resurssi ei leitud
-- `ALREADY_EXISTS (6)` - Ressurss on juba olemas
-- `UNAUTHENTICATED (16)` - Autentimine ebaõnnestus
-- `INTERNAL (13)` - Serveri sisemine viga
+- `OK (0)` - Successful response
+- `INVALID_ARGUMENT (3)` - Invalid input parameters
+- `NOT_FOUND (5)` - Resource not found
+- `ALREADY_EXISTS (6)` - Resource already exists
+- `UNAUTHENTICATED (16)` - Authentication failed
+- `INTERNAL (13)` - Internal server error
 
-## Testimine
+## Testing
 
-### Automaattestid
+### Automated Tests
 
-Testid kontrollivad:
-1. Proto failide kompileerimist
-2. Serveri ühenduvust
-3. Autentimise teenuse funktsionaalsust
-4. Kliendi integratsiooniteste
+Tests verify:
+1. Proto file compilation
+2. Server connectivity
+3. Authentication service functionality
+4. Client integration tests
+5. Security (logout token invalidation)
 
-### Manuaalne testimine
+### Manual Testing
 
-1. Käivita server:
+1. Start server:
    ```bash
    npm start
    ```
 
-2. Teises terminalis käivita klient:
+2. In another terminal, run client:
    ```bash
    npm run client
    ```
 
-3. Kontrolli väljundit - kõik RPC kutsed peaksid õnnestuma.
+3. Check output - all RPC calls should succeed.
 
-## REST vs gRPC vastavus
+### Security Testing
 
-| REST Endpoint | HTTP Meetod | gRPC RPC | Proto fail |
+Run the logout security test:
+```bash
+node tests/logout-security-test.js
+```
+
+This test verifies that tokens are properly invalidated after logout.
+
+## REST vs gRPC Mapping
+
+| REST Endpoint | HTTP Method | gRPC RPC | Proto File |
 |---------------|-------------|----------|-----------|
 | `/sessions` | POST | AuthService.Login | auth.proto |
 | `/sessions` | DELETE | AuthService.Logout | auth.proto |
@@ -259,69 +287,86 @@ Testid kontrollivad:
 | `/orders/:id` | PATCH | OrderService.UpdateOrder | orders.proto |
 | `/orders/:id` | DELETE | OrderService.DeleteOrder | orders.proto |
 
+## Security Features
+
+### Secure Logout Implementation
+
+This project includes a secure logout mechanism that properly invalidates JWT tokens:
+
+- **Token Blacklisting**: Logout adds tokens to a blacklist table
+- **Middleware Validation**: All authenticated endpoints check the blacklist
+- **Security Testing**: Automated tests verify token invalidation
+
+### Authentication Flow
+
+1. **Login**: Generates JWT token
+2. **Authenticated Requests**: Token validated + blacklist checked
+3. **Logout**: Token added to blacklist
+4. **Post-Logout**: All requests with that token are rejected
+
 ## Troubleshooting
 
-### Levinud probleemid
+### Common Issues
 
-1. **Port 50051 on juba kasutusel:**
+1. **Port 50051 already in use:**
    ```bash
-   # Kontrolli, mis protsess kasutab porti
+   # Check what process is using the port
    netstat -tulpn | grep 50051
-   # Või muuda pordi .env failis
+   # Or change port in .env file
    echo "GRPC_PORT=50052" >> .env
    ```
 
-2. **Proto failide kompileerimine ebaõnnestub:**
+2. **Proto file compilation fails:**
    ```bash
-   # Paigalda protoc
+   # Install protoc
    # Ubuntu/Debian:
    sudo apt-get install protobuf-compiler
    # macOS:
    brew install protobuf
-   # Windows: allalaadimine protobuf.dev lehelt
+   # Windows: download from protobuf.dev
    ```
 
-3. **Andmebaasi vead:**
+3. **Database errors:**
    ```bash
-   # Kustuta andmebaas ja käivita uuesti
+   # Delete database and restart
    rm database.sqlite
    npm start
    ```
 
-4. **Node.js versioon liiga vana:**
+4. **Node.js version too old:**
    ```bash
-   # Värskenda Node.js versioon 16 või uuemaks
+   # Update Node.js to version 16 or newer
    node --version
-   # Paigalda nvm ja kasuta uuemat versiooni
+   # Install nvm and use newer version
    ```
 
-## Arendamine
+## Development
 
-### Uue teenuse lisamine
+### Adding a New Service
 
-1. Loo uus `.proto` fail `proto/` kaustas
-2. Defineeri teenus ja sõnumid
-3. Loo teenuse implementatsioon `src/` kaustas
-4. Lisa teenus `src/server.js` faili
-5. Uuenda kliendi näidet
-6. Lisa testid
+1. Create new `.proto` file in `proto/` folder
+2. Define service and messages
+3. Create service implementation in `src/` folder
+4. Add service to `src/server.js`
+5. Update client example
+6. Add tests
 
-### Koodi stiil
+### Code Style
 
-- Kasuta ESLint konfiguratsiooni
-- Järgi Protocol Buffers nimetamiskonventsioone
-- Kommenteeri keerulised äriloogika osad
-- Kasuta async/await Promise-de asemel
+- Use ESLint configuration
+- Follow Protocol Buffers naming conventions
+- Comment complex business logic
+- Use async/await instead of Promises
 
-## Autorid
+## Authors
 
-**TAK24 Grupp**
+**TAK24 Group**
 
-## Litsents
+## License
 
 MIT
 
-## Lisainfo
+## Additional Information
 
-Rohkem teavet gRPC kohta: https://grpc.io/
-Protocol Buffers dokumentatsioon: https://protobuf.dev/
+More about gRPC: https://grpc.io/
+Protocol Buffers documentation: https://protobuf.dev/
